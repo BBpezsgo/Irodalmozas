@@ -1,0 +1,159 @@
+html, body {
+    margin: 0;
+    height: 100%;
+    background-color: #115177;
+}
+
+#lineCont {
+    height: 100%;
+    width: 100%;
+    display: block;
+    flex-shrink: 0;
+    z-index: 2;
+}
+
+#line {
+    width: 6px;
+    height: calc(100% - 40px);
+    background: #fff8;
+    outline: 2px solid #fff4;
+    border-radius: 5px;
+    margin: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    position: relative;
+    display: block;
+    z-index: 2;
+}
+
+#span {
+    display: none;
+    width: 70%;
+    margin: auto;
+    margin-top: 25%;
+    text-align: center;
+    color: #47cbff;
+}
+
+.circle {
+    width: 10px;
+    height: 10px;
+    background: #47cbff;
+    border-radius: 15px;
+    position: absolute;
+    left: -5px;
+    border: 3px solid #115177;
+    cursor: pointer;
+    z-index: 3;
+    display: block;
+}
+
+.range {
+    width: 8px;
+    transform: translateX(-1px);
+    
+    background: #47cbff;
+    outline: 2px solid #0004;
+    cursor: pointer;
+    transition: all 100ms linear;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 2;
+}
+
+.range:hover {
+    width: 14px;
+    transform: translateX(-3.5px);
+    border-radius: 10px;
+}
+
+.circle.hover:before,
+.circle.active:before {
+    display: block;
+}
+
+.circle.hover .popupSpan,
+.circle.active .popupSpan,
+.range.hover .popupSpan,
+.range.active .popupSpan {
+    display: block;
+}
+
+.circle.active .popupSpan,
+.range.active .popupSpan {
+    transform: scaleY(1);
+    top: -40px;
+}
+
+.circle .popupSpan {
+    transform: scaleY(0);
+}
+
+.range .popupSpan {
+    transform: scaleY(0);
+}
+
+.circle .popupSpan,
+.range .popupSpan {
+    display: inline-block;
+    pointer-events: none;
+    cursor: default;
+
+    height: auto;
+    padding: 5px;
+    white-space: nowrap;
+    position: absolute;
+    left: 10px;
+    transition: all 0.1s ease-out;
+    text-align: center;
+    background-color: #47cbff;
+    color: #000;
+    z-index: 4;
+    border-radius: 0px 4px 4px 0px;
+}
+
+.circle .popupSpan {
+    width: auto;
+    left: 20px;
+    top: -50%;
+}
+
+.circle:hover .popupSpan,
+.range:hover .popupSpan {
+    transform: scaleY(1);
+}
+
+.circle:before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    border-radius: 100%;
+    top: 2px;
+    left: 2px;
+    display: none;
+    z-index: 2;
+}
+
+.preview {
+    background-color: #cecece;
+    box-shadow: #000 2px 2px 6px;
+    border-radius: 4px;
+    font-size: 24px;
+    padding: 4px 6px;
+    z-index: 2;
+}
+
+.era {
+    left: 0px;
+    width: 100%;
+    z-index: 1;
+    text-align: right;
+}
+
+.era > span {
+    display: block;
+    margin: 32px;
+    font-weight: 1000;
+    font-size: 1.5em;
+}
