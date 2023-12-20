@@ -1,0 +1,236 @@
+/* #region Container  */
+
+#lineCont {
+    height: 100%;
+    width: 100%;
+    display: block;
+    flex-shrink: 0;
+    z-index: 2;
+}
+
+#line {
+    width: 6px;
+    height: calc(100% - 40px);
+    background: #fff8;
+    outline: 2px solid #fff4;
+    border-radius: 5px;
+    margin: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    position: relative;
+    display: block;
+    z-index: 2;
+}
+
+/* #endregion */
+
+#span {
+    display: none;
+    width: 70%;
+    margin: auto;
+    margin-top: 25%;
+    text-align: center;
+    color: #47cbff;
+}
+
+.preview {
+    background-color: #e4d1b9;
+    box-shadow: #000 4px 4px 0px;
+    font-size: 24px;
+    padding: 4px 6px;
+    z-index: 2;
+    user-select: none;
+}
+
+/* #region Dot */
+
+.circle {
+    width: 10px;
+    height: 10px;
+    background: #47cbff;
+    border-radius: 15px;
+    position: absolute;
+    left: -5px;
+    border: 3px solid #115177;
+    cursor: pointer;
+    z-index: 3;
+    display: block;
+}
+
+.circle .popupSpan {
+    transform: scaleY(0);
+}
+
+.circle .popupSpan {
+    width: auto;
+    left: 20px;
+    top: -50%;
+}
+
+.circle:hover .popupSpan {
+    transform: scaleY(1);
+}
+
+.circle:before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    border-radius: 100%;
+    top: 2px;
+    left: 2px;
+    display: none;
+    z-index: 2;
+}
+
+.circle .popupSpan {
+    display: inline-block;
+    pointer-events: none;
+    cursor: default;
+
+    padding: 5px;
+    white-space: nowrap;
+    transition: opacity 0.1s ease-out;
+    color: #000;
+    opacity: 0;
+}
+
+/* #endregion */
+
+/* #region Range */
+
+.range {
+    width: 8px !important;
+    transform: translateX(-3px);
+    transition: all 100ms linear;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 2;
+
+    background: #acacac;
+    outline: 2px solid #0004;
+    overflow: hidden;
+    opacity: .5;
+    border: 2px solid transparent;
+}
+
+.range.important-man {
+    background: #eca217;
+    outline: 2px solid #0004;
+    opacity: 1;
+}
+
+.range:hover,
+.range:focus {
+    width: var(--bruh) !important;
+    opacity: 1;
+    z-index: 69;
+    outline: 0px solid #0004;
+    border: 2px solid brown;
+    box-shadow: #000 4px 4px 0px;
+    border-radius: 0px;
+    height: max-content !important;
+}
+
+.range:focus {
+    border: 2px solid red;
+}
+
+.range .popupSpan {
+    display: inline-block;
+    pointer-events: none;
+    cursor: default;
+
+    padding: 5px;
+    white-space: nowrap;
+    transition: opacity 0.1s ease-out;
+    color: #000;
+    opacity: 0;
+}
+
+.range:hover .popupSpan,
+.range:focus .popupSpan {
+    padding: 5px;
+    font-size: unset;
+    transform: unset;
+    opacity: 1;
+    display: block;
+}
+
+.range .popupSpan .details {
+    display: none;
+    margin: 16px 4px 8px 4px;
+}
+
+.range:hover .popupSpan .details,
+.range:focus .popupSpan .details {
+    display: block;
+}
+
+.range .popupSpan.rotated {
+    padding: 0px;
+    font-size: 7px;
+    transform: rotate(90deg);
+    opacity: 1;
+    display: block;
+}
+
+.range .popupSpan > h1 {
+    margin-top: 0px;
+    font-size: 1.5em;
+}
+
+.range .popupSpan > h1 {
+    border-bottom: 2px solid #777777;
+}
+
+.range.important-man .popupSpan > h1 {
+    border-bottom: 2px solid brown;
+}
+
+.range .popupSpan.rotated > h1 {
+    padding: 0px;
+    margin: 0px;
+    font-weight: 500;
+}
+
+.range:hover .popupSpan.rotated,
+.range:focus .popupSpan.rotated {
+    padding: 5px;
+    font-size: unset;
+    transform: rotate(0deg);
+    opacity: 1;
+    display: block;
+}
+
+.range:hover .popupSpan > h1,
+.range:focus .popupSpan > h1 {
+    padding: unset;
+    margin: unset;
+    transform: none;
+    margin-top: 0px;
+    font-size: 1.5em;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* #endregion */
+
+/* #region Era */
+
+.era {
+    left: 0px;
+    width: 100%;
+    z-index: 1;
+    text-align: right;
+}
+
+.era>span {
+    display: block;
+    margin: 32px;
+    font-weight: 1000;
+    font-size: 1.5em;
+    z-index: 60;
+}
+
+/* #endregion */

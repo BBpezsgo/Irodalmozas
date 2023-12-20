@@ -1,0 +1,36 @@
+
+header {
+    display: block;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 68;
+    background-color: #4d4d4d;
+    box-shadow: #0004 0px 0px 16px;
+}
+
+.man-search-container {
+    margin: 16px;
+}
+
+#man-search {
+    background-color: #252525;
+    color: #fff;
+    font-size: 1.3em;
+    border: none;
+}
+
+#man-search:focus {
+    outline: 3px solid #82a1ff;
+}
+
+#man-search::placeholder {
+    color: #ffffff6c;
+    user-select: none;
+}
+
+#search-error-label {
+    color: #f72e3e;
+    font-weight: 1000;
+}

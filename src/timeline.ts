@@ -2,6 +2,8 @@ import * as Time from './big-date'
 import * as Utils from './utilities'
 import { Data, Man } from './data'
 
+const OFFSET_Y = 60
+
 export type TimelinePoint = {
     date: Time.BigDate
     label: string
@@ -74,30 +76,10 @@ function CalculatePosition(first: Time.BigDate | Time.BigDateString, last: Time.
     const lastTotalRel = lastTotal - firstTotal
     const currentTotalRel = currentTotal - firstTotal
 
-    // console.log(currentTotalRel, lastTotalRel)
-
     return currentTotalRel / lastTotalRel
-
-    // const firstMonth = first.month
-    // const firstDay = first.day
-    // 
-    // const lastMonth = last.month
-    // const lastDay = last.day
-    // 
-    // const lastInt = ((lastMonth - firstMonth) * 30) + (lastDay - firstDay)
-    // 
-    // const thisMonth = current.month
-    // const thisDay = current.day
-    // 
-    // const thisInt = ((thisMonth - firstMonth) * 30) + (thisDay - firstDay)
-    // 
-    // return thisInt / lastInt
 }
 
 export function Show(data: Data, onDateClick: (index: number) => void, onRangeClick: (index: number) => void) {
-    // console.log('Timeline points:', dates)
-    // console.log('Timeline intervals:', ranges)
-
     for (let i = 0; i < data.mans.length; i++) {
         data.mans[i].indent = 0
     }
@@ -120,18 +102,6 @@ export function Show(data: Data, onDateClick: (index: number) => void, onRangeCl
         return lifetimeB - lifetimeA
     })
     
-    function AnyIntervalOverlapped(man: Man) {
-        let count = 0
-        for (const other of data.mans) {
-            if (man.name === other.name) { continue }
-            if (man.indent !== other.indent) { continue }
-            if (Time.IsIntervalOverlapped([ man.bornAt, man.diedAt ], [ other.bornAt, other.diedAt ])) {
-                count++
-            }
-        }
-        return count
-    }
-
     if (data.poems.length < 2 && data.mans.length === 0) {
         $("#line").hide()
         return
@@ -142,62 +112,115 @@ export function Show(data: Data, onDateClick: (index: number) => void, onRangeCl
 
     const lineRect = Utils.GetRect(Utils.GetElement('lineCont'))
 
+    const dayToPx = (lineRect.height / (Time.ToDays(last) - Time.ToDays(first)))
+    const pxToDay = 1 / dayToPx
+
+    function IndentInterval(man: Man) {
+        let count = man.indent ?? 0
+        for (let i = 0; i < data.mans.length; i++) {
+            const other = data.mans[i]
+            if (man.name === other.name) { continue }
+            if (count !== other.indent) { continue }
+            if (Time.IsIntervalOverlapped([ man.bornAt, man.diedAt ], [ other.bornAt, other.diedAt ], 120 * pxToDay)) {
+                count++
+                i = 0
+            }
+        }
+        return count
+    }
+
     for (let i = 0; i < data.eras.length; i++) {
         const era = data.eras[i]
         const startPos = CalculatePosition(first, last, era.start)
         const endPos = CalculatePosition(first, last, era.end)
 
-        const topPx = Math.max(0, startPos * lineRect.height + lineRect.top)
+        const topPx = Math.max(0, startPos * lineRect.height + lineRect.top) + OFFSET_Y
         const heightPx = (endPos - startPos) * lineRect.height
 
         $("body").append(
             `<div class="era" id="era${i}" style="position: absolute; top: ${topPx}px; height: ${heightPx}px; background-color: ${era.color}; box-shadow: ${era.color} 0px 0px 32px 32px">` +
-                `<span>` +
+                `<span style="position: sticky; top: 70px">` +
                     era.name +
                 `</span>` +
             `</div>`)
     }
 
     for (let i = 0; i < data.poems.length; i++) {
-        AppendCircle(i, CalculatePosition(first, last, data.poems[i].madeAt), `${data.poems[i].author} - ${data.poems[i].title}`)
+        const poem = data.poems[i]
+        const position = CalculatePosition(first, last, data.poems[i].madeAt)
+        $("#line")
+            .append(
+            `<div class="circle" id="circle${i}" style="top: ${position * 100}%;">` +
+                `<div class="popupSpan">` +
+                `${poem.author} - ${poem.title}` +
+                `</div>` +
+            `</div>`)
     }
 
     for (let i = 0; i < data.mans.length; i++) {
         const startPos = CalculatePosition(first, last, data.mans[i].bornAt)
         const endPos = CalculatePosition(first, last, data.mans[i].diedAt)
 
-        data.mans[i].indent = AnyIntervalOverlapped(data.mans[i])
-        $("#line").append(
-            `<div class="range" id="range${i}" style="top: ${startPos * 100}%; left: ${data.mans[i].indent as number * 10}px; height: ${(endPos - startPos) * 100}%;">` +
-                `<div class="popupSpan">` +
-                data.mans[i].name +
-                `</div>` +
-            `</div>`)
+        data.mans[i].indent = IndentInterval(data.mans[i])
+        data.mans[i].elementId = `range${i}`
+
+        const man = data.mans[i]
+
+        let html = ''
+
+        html += `<div tabindex="0" class="range ${(man.important ? 'important-man' : '')}" id="${man.elementId}" style="top: ${startPos * 100}%; left: ${man.indent as number * 20}px; min-height: ${(endPos - startPos) * 100}%;">`
+        html += `<div class="popupSpan">`
+        html += `<h1>`
+        html += man.name
+        html += `</h1>`
+
+        html += '<div class="details">'
+        html += `<p>Született: <b>${Time.ToString(man.bornAt)}</b></p>`
+        html += `<p>Elhunyt: <b>${Time.ToString(man.diedAt)}</b></p>`
+        if (man.imageUrl) {
+            html += `<img src="${man.imageUrl}" width="150" title="${man.name} portréja" alt="${man.name} portréja">`
+        }        
+        html += `</div>`
+
+        html += `</div>`
+        html += `</div>`
+
+        $("#line").append(html)
         
-        const eInterval = Utils.GetElement(`range${i}`)
+        const eInterval = Utils.GetElement(man.elementId)
 
-        const elemRect = Utils.GetRect(eInterval)
+        let expandedWidth = eInterval.querySelector('.popupSpan')?.getBoundingClientRect().width ?? 0
+        expandedWidth = Math.max(expandedWidth, 250)
+        if (man.imageUrl)
+        { expandedWidth = Math.max(expandedWidth, 150 + 20) }
+        eInterval.style.setProperty('--bruh', `${expandedWidth}px`)
 
-        let ePreview: HTMLElement | null = document.createElement('div')
-        ePreview.innerText = data.mans[i].name
-        ePreview.classList.add('preview')
-        ePreview.style.position = 'absolute'
-        ePreview.style.top = `${elemRect.top}px`
-        ePreview.style.left = `${30}px`
+        eInterval.querySelector('.popupSpan')?.classList.add('rotated')
 
-        for (const other of previewElements) {
-            const otherRect = Utils.GetRect(other)
-            const d = Math.abs((elemRect.y - otherRect.y))
-            if (Utils.IsRectOverlaps(elemRect, otherRect) || d < 100) {
-                ePreview.remove()
-                ePreview = null
-                break
+        if (man.important) {
+            const elemRect = Utils.GetRect(eInterval)
+    
+            let ePreview: HTMLElement | null = document.createElement('div')
+            ePreview.innerText = man.name
+            ePreview.classList.add('preview')
+            ePreview.style.position = 'absolute'
+            ePreview.style.top = `${elemRect.top + OFFSET_Y}px`
+            ePreview.style.left = `${30}px`
+    
+            for (const other of previewElements) {
+                const otherRect = Utils.GetRect(other)
+                const d = Math.abs((elemRect.y - otherRect.y))
+                if (Utils.IsRectOverlaps(elemRect, otherRect) || d < 50) {
+                    ePreview.remove()
+                    ePreview = null
+                    break
+                }
             }
-        }
-
-        if (ePreview) {
-            previewElements.push(ePreview)
-            document.body.appendChild(ePreview)
+    
+            if (ePreview) {
+                previewElements.push(ePreview)
+                document.body.appendChild(ePreview)
+            }
         }
     }
 

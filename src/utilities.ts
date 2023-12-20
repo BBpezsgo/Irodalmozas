@@ -14,9 +14,12 @@ export function CreateElement(htmlString: string): Element {
     return result
 }
 
-export function TryGetElement(id: string) { return document.getElementById(id) }
+export function TryGetElement(id: string | null | undefined) {
+    if (!id) { return null }
+    return document.getElementById(id)
+}
 
-export function GetElement(id: string) {
+export function GetElement(id: string | null | undefined) {
     const element = TryGetElement(id)
     if (!element)
     { throw new Error(`Element with id "${id}" not found`) }

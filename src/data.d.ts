@@ -19,12 +19,18 @@ export type Man = {
     name: string
     bornAt: BigDateString
     diedAt: BigDateString
+    important?: true
+    imageUrl?: string
+    
     indent?: number
+    elementId?: string
 }
 
 export type Poem = {
     author: string
     title: string
     madeAt: BigDateString
+    
+    elementId?: string
 }
 

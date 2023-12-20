@@ -4,12 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Irodalmozók</title>
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./css/general.css">
+    <link rel="stylesheet" href="./css/header.css">
+    <link rel="stylesheet" href="./css/timeline.css">
 </head>
 <body>
-    <div>
-        <input type="text" placeholder="Költő/író keresése" id="man-search">
-    </div>
+    <header>
+        <div class="man-search-container">
+            <input type="text" placeholder="Költő/író keresése" id="man-search">
+            <span id="search-error-label"></span>
+        </div>
+    </header>
 
     <div id="lineCont" style="height: 3000px;"> 
         <div id="line"></div>

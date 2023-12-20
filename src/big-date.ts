@@ -1,5 +1,4 @@
 export type BigDate = {
-    /** **Can be negative** */
     year: number,
     /** **1-based** */
     month: number,
@@ -25,6 +24,7 @@ export function Min(a: BigDate, b: BigDate) {
     if (a.day > b.day) { return b }
     return a
 }
+
 export function Max(a: BigDate, b: BigDate) {
     if (a.year < b.year) { return b }
     if (a.year > b.year) { return a }
@@ -35,18 +35,30 @@ export function Max(a: BigDate, b: BigDate) {
     return b
 }
 
-export function IsIntervalOverlapped(a: Interval<DateParseable>, b: Interval<DateParseable>) {
+export function IsIntervalOverlapped(a: Interval<DateParseable>, b: Interval<DateParseable>, threshold: number) {
     if (Array.isArray(a))
     { a = { start: a[0], end: a[1] } }
 
     if (Array.isArray(b))
     { b = { start: b[0], end: b[1] } }
 
-    if (ToDays(b.start) < ToDays(a.start)) {
-        return ToDays(b.end) > ToDays(a.start)
-    } else {
-        return ToDays(b.start) < ToDays(a.end)
+    if (a.start > b.start) {
+        const temp = a
+        a = b
+        b = temp
     }
+
+    const dist = (ToDays(a.end) - ToDays(b.start))
+
+    return dist > -threshold
+
+    // console.log(dist)
+    // 
+    // if ((ToDays(b.start) - threshold) < (ToDays(a.start) + threshold)) {
+    //     return (ToDays(b.end) + threshold) > (ToDays(a.start) - threshold)
+    // } else {
+    //     return (ToDays(b.start) - threshold) < (ToDays(a.end) + threshold)
+    // }
 }
 
 export function Parse(value: DateParseable): BigDate {
@@ -65,9 +77,26 @@ export function Parse(value: DateParseable): BigDate {
     }
 }
 
-/** **Can be negative** */
 export function ToDays(date: DateParseable): number {
     date = Parse(date)
     let sign = Math.sign(date.year)
     return (date.year * 365.25) + (date.month * 30 * sign) + (date.day * sign)
+}
+
+export function ToString(date: DateParseable) {
+    date = Parse(date)
+    return `${date.year}. ${{
+        1: 'Január',
+        2: 'Február',
+        3: 'Március',
+        4: 'Április',
+        5: 'Május',
+        6: 'Június',
+        7: 'Július',
+        8: 'Augusztus',
+        9: 'Szeptember',
+        10: 'Október',
+        11: 'November',
+        12: 'December',
+    }[date.month]} ${date.day}.`
 }
