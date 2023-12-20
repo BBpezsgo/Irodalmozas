@@ -179,7 +179,10 @@ export function Show(data: Data, onDateClick: (index: number) => void, onRangeCl
         html += `<p>Elhunyt: <b>${Time.ToString(man.diedAt)}</b></p>`
         if (man.imageUrl) {
             html += `<img src="${man.imageUrl}" width="150" title="${man.name} portréja" alt="${man.name} portréja">`
-        }        
+        }
+        if (man.desc) {
+            html += `<p style="text-wrap: pretty">${man.desc}</p>`
+        }
         html += `</div>`
 
         html += `</div>`

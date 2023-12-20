@@ -21,6 +21,7 @@ export type Man = {
     diedAt: BigDateString
     important?: true
     imageUrl?: string
+    desc?: string
     
     indent?: number
     elementId?: string

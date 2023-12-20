@@ -14,12 +14,18 @@
     background: #fff8;
     outline: 2px solid #fff4;
     border-radius: 5px;
-    margin: auto;
+    left: 33%;
     top: 50%;
     transform: translateY(-50%);
     position: relative;
     display: block;
     z-index: 2;
+}
+
+@media (max-width: 950px) {
+    #line {
+        left: 300px
+    }
 }
 
 /* #endregion */
