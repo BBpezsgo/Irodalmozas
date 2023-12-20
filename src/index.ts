@@ -1,5 +1,6 @@
 import * as Utilities from './utilities'
 import * as Timeline from './timeline'
+import * as Time from './big-date'
 import { Data } from './data';
 
 declare global {
@@ -72,6 +73,29 @@ async function Main() {
             eRange.classList.remove('focused-range')
         })
     }
+    
+    const lineRect = Utilities.GetRect(Utilities.GetElement('lineCont'))
+
+    const dayToPx = (lineRect.height / (Time.ToDays(data.end) - Time.ToDays(data.start)))
+    const pxToDay = 1 / dayToPx
+
+    const eDateLabel = Utilities.GetElement('date-label')
+
+    function UpdateDateLabel(pageX: number, pageY: number) {
+        const date = Time.FromDays(((pageY - Timeline.OFFSET_Y) * pxToDay) + Time.ToDays(data.start))
+        eDateLabel.style.left = `${Math.min(Math.max(pageX, 0), window.innerWidth - 70)}px`
+        eDateLabel.style.top = `${Math.max(pageY, window.scrollY + 90)}px`
+        eDateLabel.style.opacity = '100%'
+        eDateLabel.textContent = date.year.toString()
+    }
+
+    document.addEventListener('mousemove', e => {
+        UpdateDateLabel(e.pageX + 3, e.pageY - 3)
+    })
+
+    document.addEventListener('scroll', _ => {
+        eDateLabel.style.opacity = '0%'
+    })
 }
 
 document.addEventListener('DOMContentLoaded', () => { Main() })

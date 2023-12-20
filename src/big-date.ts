@@ -100,3 +100,18 @@ export function ToString(date: DateParseable) {
         12: 'December',
     }[date.month]} ${date.day}.`
 }
+
+export function FromDays(days: number): BigDate {
+    days = Math.abs(days)
+    const years = Math.floor(days / 365.25)
+    days = days % 365.25
+    const months = Math.floor(days / 30.4375)
+    days = days % 30.4375
+    days = Math.floor(days)
+
+    return {
+        year: years,
+        month: months,
+        day: days,
+    }
+}

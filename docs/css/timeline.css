@@ -35,7 +35,7 @@
 
 .preview {
     background-color: #e4d1b9;
-    box-shadow: #000 4px 4px 0px;
+    box-shadow: #472905 4px 4px 0px;
     font-size: 24px;
     padding: 4px 6px;
     z-index: 2;
@@ -127,7 +127,7 @@
     z-index: 69;
     outline: 0px solid #0004;
     border: 2px solid brown;
-    box-shadow: #000 4px 4px 0px;
+    box-shadow: #472905 4px 4px 0px;
     border-radius: 0px;
     height: max-content !important;
 }

@@ -3,9 +3,24 @@ body {
     margin: 0px;
     height: 100%;
     width: 100%;
-    background-color: #115177;
+    background-color: #a3a3a3;
 }
 
 body {
     margin-top: 60px;
+}
+
+#date-label {
+    display: block;
+    position: absolute;
+    z-index: 67;
+    pointer-events: none;
+    user-select: none;
+    transform: translateY(-100%);
+    background-color: #e4d1b9;
+    color: #291702;
+    font-size: 1.1em;
+    box-shadow: #472905 4px 4px 0px;
+    padding: 0px 2px;
+    transition: opacity 200ms;
 }

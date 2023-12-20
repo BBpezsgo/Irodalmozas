@@ -2,7 +2,7 @@ import * as Time from './big-date'
 import * as Utils from './utilities'
 import { Data, Man } from './data'
 
-const OFFSET_Y = 60
+export const OFFSET_Y = 60
 
 export type TimelinePoint = {
     date: Time.BigDate
