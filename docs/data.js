@@ -103,14 +103,14 @@
                 'A magyarországi reneszánsz második korszakának nagy alakja. A magyar ' +
                 'nyelvű költészet első kiemelkedő művelője, a magyar irodalom első klasszikusa.'
         },
-        {
-            bornAt: "1564-4-1",
-            diedAt: "1616-4-24",
-            name: "William Shakespeare",
-            important: true,
-            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/William_Shakespeare_by_John_Taylor.jpg/800px-William_Shakespeare_by_John_Taylor.jpg',
-            desc: 'William Shakespeare angol drámaíró, költő, színész.',
-        },
+        // {
+        //    bornAt: "1564-4-1",
+        //    diedAt: "1616-4-24",
+        //    name: "William Shakespeare",
+        //    important: true,
+        //    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/William_Shakespeare_by_John_Taylor.jpg/800px-William_Shakespeare_by_John_Taylor.jpg',
+        //    desc: 'William Shakespeare angol drámaíró, költő, színész.',
+        // },
         {
             bornAt: "1570-10-4",
             diedAt: "1637-3-19",
