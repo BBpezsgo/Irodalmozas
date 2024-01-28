@@ -202,7 +202,8 @@
             diedAt: "1849-6-31",
             name: "Petőfi Sándor",
             important: true,
-            imageUrl: "https://kultura.hu/wp-content/uploads/2019/11/pet%C5%91fi.jpg",
+            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/ed/Orlai_Pet%C5%91fi_dolgoz%C3%B3szob%C3%A1j%C3%A1ban.jpg',
+            // imageUrl: "https://kultura.hu/wp-content/uploads/2019/11/pet%C5%91fi.jpg",
             desc: 'Petőfi Sándor magyar költő, forradalmár, nemzeti hős, a magyar költészet egyik legismertebb és egyik legkiemelkedőbb alakja. Rövid élete alatt közel ezer verset írt magyarul, ebből körülbelül nyolcszázötven maradt az utókorra, és az ismertebbeket sok más nyelvre lefordították.'
         },
         {
